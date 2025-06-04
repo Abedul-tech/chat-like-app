@@ -1,0 +1,25 @@
+server:
+  port: 8761
+
+spring:
+  application:
+    name: mcsv-eureka
+
+#Connecting to eureka
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    #Disable autosave eureka within its own server
+    register-with-eureka: false
+    fetch-registry: false
+    #Path of eureka server
+    service-url:
+      defaultZone: http://localhost:${server.port}/eureka/ # Ensure `service-url`, not `server-url`
+
+#exposes the /actuator/health endpoint
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health

@@ -1,0 +1,28 @@
+server:
+  port: 8888
+  servlet:
+    context-path: /
+spring:
+  profiles:
+    # Tells Spring to use the native file system or classpath instead of Git.
+    active: native
+  application:
+    name: config-server
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: classpath:/configurations
+      # Suppress UNKNOWN warnings for optional components like Config Server or Discovery
+      failFast: false
+#To use actuator and "depends on"
+management:
+  server:
+    port: 8889 #IMportant to make this, port for actuator checks
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
