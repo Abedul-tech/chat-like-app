@@ -15,11 +15,12 @@ spring:
           #Equivalent to use the annotation "@EnableDiscoveryClient"
           #discovery locator allows the gateway to dynamically discover services registered with a service registry(eureka) instead using PORTS or ip addresses
           enabled: true
+          lower-case-service-id: true
       #Gateway checks all routes(predicates) and if it finds the coincidence, it forwards to the respective uri(microservice)
       routes:
         - id: chat
           #Names defined in those application names,which is registered in the eureka server(should be the same)
-          uri: lb://MCSV-WEBSOCKET
+          uri: lb://mcsv-websocket
           predicates:
           #If the request matches this route, re request is redirected(forwards) to the respective service defined in the uri
             - Path=/api/websocket/**
@@ -27,7 +28,7 @@ spring:
             - AuthenticationFilter
         #Diferents rules for the same service
         - id: websocket
-          uri: lb://MCSV-WEBSOCKET
+          uri: lb://mcsv-websocket
           predicates:
             - Path=/websocket
           filters:
@@ -41,7 +42,7 @@ spring:
 
         - id: auth
           #Names defined in those application names
-          uri: lb://MCSV-AUTH
+          uri: lb://mcsv-auth
           predicates:
             - Path=/api/auth/**
           filters:
