@@ -1,5 +1,6 @@
 spring:
   application:
     name: mcsv-eureka
+#localhost to tests without docker, when dockerizing change it by mvcs-config
   config:
-    import: "optional:configserver:http://localhost:8888/"
+    import: "optional:configserver:http://mcsv-config:8888/"

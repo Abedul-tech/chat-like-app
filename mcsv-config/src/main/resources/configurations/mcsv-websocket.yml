@@ -7,14 +7,6 @@ spring:
   #Spring level to define beans will be used throughout the service
   kafka:
 
-  cassandra:
-    keyspace-name: CHAT
-    contact-points: 127.0.0.1
-    port: 9042
-    schema-action: CREATE_IF_NOT_EXISTS
-    local-datacenter: datacenter1
-        # Auto-creates tables from your @Table entities
-
 management:
   endpoints:
     web:
@@ -23,8 +15,6 @@ management:
 
 #Eureka connection
 eureka:
-  instance:
-    hostname: localhost
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: http://mcsv-eureka:8761/eureka/

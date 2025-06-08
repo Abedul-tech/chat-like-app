@@ -1,27 +1,58 @@
 services:
+#Databases configuration
+  cassandra:
+    image: cassandra:4.1.8
+    container_name: cassandra-db
+    environment:
+      CASSANDRA_KEYSPACE: CHAT
+      CASSANDRA_DC: datacenter1
+      CASSANDRA_CLUSTER_NAME: chat-cluster
+    volumes:
+      - cassandra_data:/var/lib/cassandra
+    healthcheck:
+      test: [ "CMD", "cqlsh", "-e", "describe keyspaces" ]
+      interval: 20s
+      timeout: 10s
+      retries: 5
+    networks: # <--- ADD THIS SECTION
+      - config-network # <--- ADD THIS LINE
+
+  mysql:
+    image: mysql:8.0.42
+    container_name: mysql-db
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456789
+      MYSQL_DATABASE: User_WebSocket
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck: # Optional but recommended for better orchestration
+      test: bash -c "mysqladmin ping -h localhost -u$MYSQL_USER -p$MYSQL_PASSWORD"
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - config-network
+
 #Remove ports for internal services; it's not necessary to expose them.
 # Only expose ports if external testing or access to specific microservices is needed
   mcsv-config:
     container_name: mcsv-config
-    build:
-      context: ./mcsv-config
-      dockerfile: Dockerfile
+    build: ./mcsv-config
     networks:
       - config-network
     healthcheck:
-      test: ["CMD","curl","-f", "http://localhost:8889/actuator/health"]
+      test: ["CMD","curl","-f", "http://localhost:8888/actuator/health"]
       interval: 10s
       timeout: 10s
       retries: 10
 
   mcsv-eureka:
     container_name: mcsv-eureka
-    build:
-      context: ./mcsv-eureka
-      dockerfile: Dockerfile
+    build: ./mcsv-eureka
+
     ports:
-      #host_port:container_port
-      - "8761:8761" # if the app runs on 8761 internally
+      # host_port:container_port
+      - "8761:8761" # expose Eureka dashboard
     networks:
       - config-network
     healthcheck:
@@ -35,9 +66,7 @@ services:
 
   mcsv-auth:
     container_name: mcsv-auth
-    build:
-      context: ./auth
-      dockerfile: Dockerfile
+    build: ./auth
     networks:
       - config-network
     healthcheck:
@@ -51,9 +80,7 @@ services:
 
   mcsv-websocket:
     container_name: mcsv-websocket
-    build:
-      context: ./mcsv-websocket
-      dockerfile: Dockerfile
+    build: ./mcsv-websocket
     networks:
       - config-network
     healthcheck:
@@ -67,9 +94,11 @@ services:
 
   mcsv-message:
     container_name: mcsv-message
-    build:
-      context: ./mcsv-message
-      dockerfile: Dockerfile
+    build: ./mcsv-message
+
+    environment:
+      - SPRING_CASSANDRA_CONTACT_POINTS=cassandra-db
+      - SPRING_CASSANDRA_PORT=9042
     networks:
       - config-network
     healthcheck:
@@ -80,12 +109,13 @@ services:
     depends_on:
       mcsv-eureka:
         condition: service_healthy
+      cassandra: # <--- Optionally add cassandra here to ensure it starts before mcsv-message
+        condition: service_healthy # <--- Or service_started if healthcheck is not sufficient initially
 
   mcsv-gateway:
     container_name: mcsv-gateway
-    build:
-      context: ./mcsv-gateway
-      dockerfile: Dockerfile
+    build: ./mcsv-gateway
+
     ports:
       - "8080:8080"
     networks:
@@ -97,6 +127,9 @@ services:
         condition: service_healthy
       mcsv-message:
         condition: service_healthy
+volumes:
+  mysql_data:
+  cassandra_data:
 
 networks:
   config-network:

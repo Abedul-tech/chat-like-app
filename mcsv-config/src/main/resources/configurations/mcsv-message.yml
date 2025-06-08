@@ -7,7 +7,7 @@ spring:
 
   cassandra:
     keyspace-name: CHAT
-    contact-points: 127.0.0.1
+    contact-points: cassandra-db #127.0.0.1 only works if your app runs on the host machine
     port: 9042
     schema-action: CREATE_IF_NOT_EXISTS
     local-datacenter: datacenter1
@@ -20,8 +20,6 @@ management:
 
 #Eureka configuration—Connecting to it
 eureka:
-  instance:
-    hostname: localhost
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: http://mcsv-eureka:8761/eureka/

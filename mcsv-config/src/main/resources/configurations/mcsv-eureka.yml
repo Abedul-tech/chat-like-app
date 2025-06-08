@@ -8,14 +8,15 @@ spring:
 #Connecting to eureka
 eureka:
   instance:
-    hostname: localhost
+    hostname: mcsv-eureka  # Use container name, not "localhost"
+    prefer-ip-address: true  # Optional: useful in Docker
   client:
     #Disable autosave eureka within its own server
     register-with-eureka: false
     fetch-registry: false
     #Path of eureka server
     service-url:
-      defaultZone: http://localhost:${server.port}/eureka/ # Ensure `service-url`, not `server-url`
+      defaultZone: http://mcsv-eureka:${server.port}/eureka/ # Ensure `service-url`, not `server-url`
 
 #exposes the /actuator/health endpoint
 management:

@@ -17,8 +17,6 @@ spring:
       failFast: false
 #To use actuator and "depends on"
 management:
-  server:
-    port: 8889 #IMportant to make this, port for actuator checks
   endpoints:
     web:
       exposure:
