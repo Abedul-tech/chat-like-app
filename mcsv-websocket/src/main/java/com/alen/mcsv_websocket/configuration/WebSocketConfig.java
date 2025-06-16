@@ -19,8 +19,9 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/websocket")
+        registry.addEndpoint("/ws")
                 .setHandshakeHandler(new CustomHandshakeHandler())// <----Here we configure our principal registered in the websocket session
-                .setAllowedOrigins("http://localhost:4200");
+                .setAllowedOrigins("http://localhost:4200")// KEEP THIS! It's for SockJS internal validation.
+                .withSockJS();
     }
 }

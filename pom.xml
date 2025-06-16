@@ -24,6 +24,7 @@
     <module>mcsv-eureka</module>
     <module>mcsv-gateway</module>
     <module>mcsv-message</module>
+    <module>common</module>
   </modules>
 
   <dependencyManagement>

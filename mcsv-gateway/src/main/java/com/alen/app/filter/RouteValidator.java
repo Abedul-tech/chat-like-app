@@ -12,7 +12,7 @@ public class RouteValidator {
     public static final List<String> openApiEndpoinnts = List.of(
             "/api/auth/login",
             "/api/auth/register",
-            "/websocket"
+            "/ws"
     );
     //If the URL is NOT in the public list, then the request is secured (authentication is required).
     public Predicate<ServerHttpRequest> isSecured =
