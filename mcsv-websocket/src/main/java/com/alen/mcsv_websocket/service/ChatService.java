@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class ChatService {
     //TO define what values will receive each instance. If I don't put, it may throw runtime errors
+    //Properties defined in the config yaml
     private final KafkaTemplate<String,MessageDto> kafkaTemplate;
     public void sendMessage(MessageDto messageDto){
         kafkaTemplate.send("chat",messageDto);
