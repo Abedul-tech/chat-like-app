@@ -47,6 +47,10 @@
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-messaging</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
@@ -68,6 +72,12 @@
 			<groupId>org.springframework.kafka</groupId>
 			<artifactId>spring-kafka</artifactId>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-redis -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-redis</artifactId>
+			<version>3.5.3</version>
+		</dependency>
 		<!-- sleuth to trace request along the microservices -->
 <!--		<dependency>-->
 <!--			<groupId>io.micrometer</groupId>-->
@@ -80,9 +90,9 @@
 <!--		</dependency>-->
 		<!--______________________________________________________________-->
 		<dependency>
-			<groupId>io.jsonwebtoken</groupId>
-			<artifactId>jjwt-api</artifactId>
-			<version>0.12.3</version>
+			<groupId>com.alen</groupId>          <!-- Use the groupId from your common module -->
+			<artifactId>common</artifactId>       <!-- Use the artifactId from your common module -->
+			<version>1.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
@@ -97,11 +107,12 @@
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.alen</groupId>          <!-- Use the groupId from your common module -->
-			<artifactId>common</artifactId>       <!-- Use the artifactId from your common module -->
-			<version>1.0-SNAPSHOT</version>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-api</artifactId>
+			<version>0.12.3</version>
+			<scope>compile</scope>
 		</dependency>
-<!--		<dependency>-->
+		<!--		<dependency>-->
 <!--			<groupId>com.alen</groupId>-->
 <!--			<artifactId>mcsv-message</artifactId>-->
 <!--			<version>0.0.1-SNAPSHOT</version>-->

@@ -41,10 +41,9 @@ public class AuthService {
                     .build();
         }catch ( AuthenticationException e){
             // Handle authentication failure
-            System.out.println("Authentication failed: " + e.getMessage());
             return TokenDto
                     .builder()
-                    .token("Authentication failed")
+                    .token("REJECTED")
                     .build();
         }
 

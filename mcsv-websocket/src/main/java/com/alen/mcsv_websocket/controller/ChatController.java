@@ -21,6 +21,7 @@ public class ChatController {
         return messageDto;
     }
 
+    //Chat prefix configured in Websocket security
     @MessageMapping("/chat.sendPrivateMessage")
     //Inside the service it will require the SimpMessagingTemplate.convertAndSendToUser()
     public void sendPrivateMessage(@Payload MessageDto messageDto) {
