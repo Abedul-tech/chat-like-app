@@ -50,7 +50,7 @@ spring:
           #Names defined in those application names
           uri: lb://mcsv-auth
           predicates:
-            - Path=/api/auth/**
+            - Path=/api/**
           filters:
             - AuthenticationFilter
 

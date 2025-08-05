@@ -6,6 +6,8 @@ import org.springframework.data.cassandra.core.mapping.Column;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 import org.springframework.data.cassandra.core.mapping.Table;
 
+import java.util.UUID;
+
 @Data
 @Builder
 @Table("message")
@@ -14,10 +16,10 @@ public class Message {
     private MessageKey key;
 
     @Column("sender_id")
-    private Long senderId;
+    private UUID senderId;
 
     @Column("receiver_id")
-    private Long receiverId;
+    private UUID receiverId;
 
     @Column("content")
     private String content;

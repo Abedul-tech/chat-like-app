@@ -8,6 +8,7 @@ import org.springframework.data.cassandra.core.mapping.PrimaryKeyClass;
 import org.springframework.data.cassandra.core.mapping.PrimaryKeyColumn;
 
 import java.time.Instant;
+import java.util.UUID;
 
 @PrimaryKeyClass
 @Data
@@ -15,7 +16,7 @@ import java.time.Instant;
 public class MessageKey {
     //Messages are sorted by time, with the most recent first__________________
     @PrimaryKeyColumn(name = "conversation_id", type = PrimaryKeyType.PARTITIONED)
-    private String conversationId;
+    private UUID conversationId;
     //clustering key-> Where we define how the messages are ordered(ascending or descending)
     @PrimaryKeyColumn(name = "sent_at", type = PrimaryKeyType.CLUSTERED, ordering = Ordering.DESCENDING)
     private Instant sentAt;

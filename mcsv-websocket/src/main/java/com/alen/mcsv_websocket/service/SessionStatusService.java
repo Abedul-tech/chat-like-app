@@ -4,12 +4,14 @@ import com.alen.mcsv_websocket.model.SessionStatus;
 import com.alen.mcsv_websocket.model.UserSession;
 import com.alen.mcsv_websocket.repository.UserSessionRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
-//This comes from Java vanilla
+
 import java.security.Principal;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 
+@ConditionalOnProperty(name = "feature.enabled", havingValue = "true")
 @Service
 @RequiredArgsConstructor
 public class SessionStatusService {

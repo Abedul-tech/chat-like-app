@@ -4,9 +4,7 @@ import com.alen.auth.dto.LoginDto;
 import com.alen.auth.dto.RegisterDto;
 import com.alen.auth.dto.TokenDto;
 import com.alen.auth.jwt.JwtService;
-import com.alen.auth.model.Gender;
-import com.alen.auth.model.Role;
-import com.alen.auth.model.User;
+import com.alen.auth.model.*;
 import com.alen.auth.repository.RoleRepository;
 import com.alen.auth.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +12,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -25,14 +22,14 @@ import java.time.LocalDateTime;
 public class AuthService {
     private final AuthenticationManager authManager;
     private final BCryptPasswordEncoder passwordEncoder;
-    private final UserDetailsService userDetailsService;
+    private final CustomUserDetailsService userDetailsService;
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final JwtService jwtService;
     public TokenDto login(LoginDto user){
         try{
             authManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(),user.getPassword()));
-            UserDetails userDetails = userDetailsService.loadUserByUsername(user.getUsername());
+            CustomUserDetails userDetails = userDetailsService.loadUserByUsername(user.getUsername());
             // Generate a token if authentication is successful
             String token = jwtService.generateToken(userDetails);
             return TokenDto
@@ -59,7 +56,7 @@ public class AuthService {
                 .phoneNumber(user.getPhoneNumber())
                 .username(user.getUsername())
                 .password(passwordEncoder.encode(user.getPassword()))
-                .lastLogin(LocalDateTime.now())
+                .lastLogin(LocalDateTime.now()) //We will handle the lastLogin when dealing with Status User
                 .build();
         userModel.addRole(role);
         userRepository.save(userModel);

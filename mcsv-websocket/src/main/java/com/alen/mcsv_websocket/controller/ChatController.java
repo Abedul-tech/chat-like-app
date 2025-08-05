@@ -3,13 +3,14 @@ package com.alen.mcsv_websocket.controller;
 import com.alen.dto.MessageDto;
 import com.alen.mcsv_websocket.service.ChatService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.stereotype.Controller;
 
 import java.security.Principal;
-
+@ConditionalOnProperty(name = "feature.enabled", havingValue = "false")
 @Controller  // Correct annotation for WebSocket controller
 @RequiredArgsConstructor
 public class ChatController {

@@ -49,10 +49,13 @@ public class JwtWebSocketInterceptor implements ChannelInterceptor {
     }
     private Authentication getAuthenticationFromToken(String token){
         String username = jwtUtil.getSubject(token);
-        return new UsernamePasswordAuthenticationToken(
+        String userId = jwtUtil.getUserId(token);
+        UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
                 username,
                 null,
                 jwtUtil.getRoles(token)
         );
+        auth.setDetails(userId); // Set extra metadata like userId, we can also do it using a hashmap
+        return auth; // Return the fully constructed Authentication object
     }
 }

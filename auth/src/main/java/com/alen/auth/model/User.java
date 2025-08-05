@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 
 import java.time.LocalDate;
@@ -23,10 +22,11 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @Entity
 @Table(name = "user")
-public class User implements UserDetails {
+public class User implements CustomUserDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+//    @GeneratedValue(strategy = GenerationType.UUID) //It generates when storing in database, not before
+    @Builder.Default //when you use @Builder, default field values are ignored
+    private UUID id = UUID.randomUUID();//This field will be initialized only when building an object with Builder, if not, it will set a Null
     //Person data-----------
     @Column(name="first_name",
             nullable = false,

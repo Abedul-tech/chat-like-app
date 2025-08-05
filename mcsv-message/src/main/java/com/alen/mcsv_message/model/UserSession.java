@@ -1,4 +1,4 @@
-package com.alen.mcsv_websocket.model;
+package com.alen.mcsv_message.model;
 
 import lombok.Builder;
 import lombok.Data;
@@ -12,10 +12,10 @@ import java.time.Instant;
 @Data
 @Builder
 @RedisHash("UserSession") //Persists instances in Redis under the UserSession:<username> keyspace
-public class UserSession implements Serializable{
+public class UserSession implements Serializable {
     @Id
     private String id;
-    @Indexed
+    @Indexed // This allows searching by username
     private String username;
     private String status;
     private String sessionId;

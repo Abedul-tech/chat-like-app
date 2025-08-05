@@ -1,5 +1,7 @@
 package com.alen.auth.configuration;
 
+import com.alen.auth.model.CustomUserDetails;
+import com.alen.auth.model.CustomUserDetailsService;
 import com.alen.auth.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -33,7 +35,7 @@ public class ApplicationConfig {
         return new BCryptPasswordEncoder();
     }
     @Bean
-    public UserDetailsService userDetails(){
+    public CustomUserDetailsService userDetails(){
         return username->userRepository.findByUsername(username).orElseThrow(()->new RuntimeException("User not found baby"));
     }
 

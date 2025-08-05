@@ -1,16 +1,14 @@
-package com.alen.dto;
+package com.alen.auth.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Builder
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class MessageDto {
-    private String sender;
-    private String receiver;
-    private String content;
+public class UserIdDto {
+    private String idUser;
 }

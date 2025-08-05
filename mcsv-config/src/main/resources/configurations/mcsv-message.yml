@@ -1,6 +1,5 @@
 server:
   port: 8050
-
 spring:
   application:
     name: mcsv-message
@@ -10,6 +9,9 @@ spring:
     port: 9042
     schema-action: CREATE_IF_NOT_EXISTS
     local-datacenter: datacenter1
+  redis:
+    host: localhost
+    port: 6379
 
   kafka:
     bootstrap-servers: localhost:9092
