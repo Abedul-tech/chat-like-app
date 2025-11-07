@@ -17,21 +17,29 @@
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.36/lombok-1.18.36.jar" />
         </processorPath>
         <module name="mcsv-config" />
-        <module name="mcsv-eureka" />
         <module name="mcsv-auth" />
+        <module name="common" />
+        <module name="mcsv-eureka" />
         <module name="mcsv-gateway" />
+        <module name="mcsv-presence" />
         <module name="mcsv-message" />
         <module name="mcsv-websocket" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="common-dto" target="17" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="common" options="-parameters" />
+      <module name="common-dto" options="-parameters" />
       <module name="mcsv-auth" options="-parameters" />
       <module name="mcsv-config" options="-parameters" />
       <module name="mcsv-eureka" options="-parameters" />
       <module name="mcsv-gateway" options="-parameters" />
       <module name="mcsv-message" options="-parameters" />
+      <module name="mcsv-presence" options="-parameters" />
       <module name="mcsv-websocket" options="-parameters" />
     </option>
   </component>

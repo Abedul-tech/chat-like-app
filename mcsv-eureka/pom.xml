@@ -38,6 +38,10 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 		<dependency>
@@ -48,6 +52,18 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
 		</dependency>
+
+		<!-- sleuth to trace request along the microservices -->
+<!--		<dependency>-->
+<!--			<groupId>io.micrometer</groupId>-->
+<!--			<artifactId>micrometer-tracing-bridge-brave</artifactId> &lt;!&ndash; or micrometer-tracing-bridge-otel &ndash;&gt;-->
+<!--		</dependency>-->
+
+<!--		<dependency>-->
+<!--			<groupId>io.zipkin.reporter2</groupId>-->
+<!--			<artifactId>zipkin-reporter-brave</artifactId>-->
+<!--		</dependency>-->
+		<!--______________________________________________________________-->
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

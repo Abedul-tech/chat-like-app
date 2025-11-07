@@ -4,20 +4,38 @@ server:
 spring:
   application:
     name: mcsv-gateway
-
   cloud:
     gateway:
+      default-filters: #It removes duplicated CORS Headers from backstream services response
+        - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials, RETAIN_UNIQUE
+      globalcors: #apply cors policy, if allowed forwards to downstream services
+        cors-configurations:
+          '[/**]': #means apply this cors config to all paths registered here
+            allowedOrigins: "http://localhost:4200"
+            allowedMethods: "*"
+            allowedHeaders: "*"
+            allowCredentials: true
       websockets:
         enabled: true  # 👈 Enable WebSocket support
 
       discovery:
         locator:
-          #Equivalent to use the annotation "@EnableDiscoveryClient"
+          #Equivalently to use the annotation "@EnableDiscoveryClient"
           #discovery locator allows the gateway to dynamically discover services registered with a service registry(eureka) instead using PORTS or ip addresses
           enabled: true
           lower-case-service-id: true
       #Gateway checks all routes(predicates) and if it finds the coincidence, it forwards to the respective uri(microservice)
       routes:
+        - id: message
+          uri: lb://mcsv-message
+          predicates:
+            - Path=/api/chat/**
+
+        - id: presence
+          uri: lb://mcsv-presence
+          predicates:
+            - Path=/api/sessions/**
+
         - id: chat
           #Names defined in those application names,which is registered in the eureka server(should be the same)
           uri: lb://mcsv-websocket
@@ -26,40 +44,35 @@ spring:
             - Path=/api/websocket/**
           filters:
             - AuthenticationFilter
-        #Diferents rules for the same service
-        - id: websocket
-          uri: lb://mcsv-websocket
+
+        # WebSocket route using lb (load balancer) scheme
+        - id: websocket-route
+          uri: lb:ws://mcsv-websocket  # Note 'lb:ws://' prefix
           predicates:
-            - Path=/websocket
-          filters:
-            #Modifies the incoming request path before forwarding to the microservice
-            #Basically changing the path to matches it with the websocket endpoint (this case doesn't anything)
-            - name: RewritePath
-              args:
-                #
-                regexp: /websocket
-                replacement: /websocket
+            - Path=/ws/**
+        # SockJS HTTP fallback routes
+        - id: websocket-sockjs
+          uri: lb://mcsv-websocket  # Note 'lb://' prefix for HTTP
+          predicates:
+            - Path=/ws/info/**
 
         - id: auth
           #Names defined in those application names
           uri: lb://mcsv-auth
           predicates:
-            - Path=/api/auth/**
+            - Path=/api/auth/**, /api/friendship/**, /api/user/**
           filters:
             - AuthenticationFilter
 
+#  zipkin:
+#    base-url: http://localhost:9411 #server where zipkin is running
+#  sleuth:
+#    sampler:
+#      probability: 1.0 #goes from 0.0 to 1.0 where 1.0 means that all the request will be traced in the server
 eureka:
   client:
     register-with-eureka: true
     service-url:
       defaultZone: http://localhost:8761/eureka/
-
-logging:
-  level:
-    org:
-      springframework:
-        cloud:
-          gateway:
-            discovery: TRACE
-            route: TRACE
-            filter: TRACE
+    lease-renewal-interval-in-seconds: 5
+    lease-expiration-duration-in-seconds: 10

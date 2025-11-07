@@ -8,7 +8,8 @@
             "mainClass": "com.alen.mcsv_config.McsvConfigApplication",
             "projectName": "mcsv-config",
             "args": "",
-            "envFile": "${workspaceFolder}/.env"
+            "envFile": "${workspaceFolder}/.env",
+            "vmArgs": " -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=35701 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dspring.jmx.enabled=true -Djava.rmi.server.hostname=localhost -Dspring.application.admin.enabled=true -Dspring.boot.project.name=mcsv-config"
         },
         {
             "type": "java",
@@ -18,7 +19,8 @@
             "mainClass": "com.alen.mcsv_eureka.McsvEurekaApplication",
             "projectName": "mcsv-eureka",
             "args": "",
-            "envFile": "${workspaceFolder}/.env"
+            "envFile": "${workspaceFolder}/.env",
+            "vmArgs": " -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=33151 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dspring.jmx.enabled=true -Djava.rmi.server.hostname=localhost -Dspring.application.admin.enabled=true -Dspring.boot.project.name=mcsv-eureka"
         },
         {
             "type": "java",
@@ -47,6 +49,26 @@
             "cwd": "${workspaceFolder}",
             "mainClass": "com.alen.auth.Application",
             "projectName": "mcsv-auth",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-McsvMessageApplication<mcsv-message>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.alen.mcsv_message.McsvMessageApplication",
+            "projectName": "mcsv-message",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-McsvWebsocketApplication<mcsv-websocket>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.alen.mcsv_websocket.McsvWebsocketApplication",
+            "projectName": "mcsv-websocket",
             "args": "",
             "envFile": "${workspaceFolder}/.env"
         }

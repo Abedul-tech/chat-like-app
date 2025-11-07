@@ -1,5 +1,6 @@
 package com.alen.auth.repository;
 
+import com.alen.auth.model.Friendship;
 import com.alen.auth.model.Role;
 import com.alen.auth.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,12 +11,21 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 
 @Repository
-public interface UserRepository extends JpaRepository<User,Integer> {
+public interface UserRepository extends JpaRepository<User, UUID> {
+
     @Query("SELECT u.roles FROM User u WHERE u.id = :id")
     List<Role> findRolesByUserId(@Param("id") Integer id);
 
     Optional<User> findByUsername(String username);
+
+    @Query(
+            value = "SELECT * FROM user WHERE LOWER(username) LIKE LOWER(CONCAT('%', :username, '%')) LIMIT 10",
+            nativeQuery = true
+    )
+    List<User> searchUsersByUsername(@Param("username") String username);
+
 }

@@ -18,8 +18,10 @@
 
 
   <modules>
+    <module>common</module>
     <module>auth</module>
     <module>mcsv-websocket</module>
+    <module>mcsv-presence</module>
     <module>mcsv-config</module>
     <module>mcsv-eureka</module>
     <module>mcsv-gateway</module>
