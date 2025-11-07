@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+//Store ID retrieved from Mysql using the username(Class UserClient)
 @Data
 @Builder
 @NoArgsConstructor

@@ -7,6 +7,8 @@ import com.alen.auth.jwt.JwtService;
 import com.alen.auth.model.*;
 import com.alen.auth.repository.RoleRepository;
 import com.alen.auth.repository.UserRepository;
+import com.alen.auth.security.CustomUserDetails;
+import com.alen.auth.security.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -14,8 +16,6 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDateTime;
 
 @RequiredArgsConstructor
 @Service
@@ -56,7 +56,6 @@ public class AuthService {
                 .phoneNumber(user.getPhoneNumber())
                 .username(user.getUsername())
                 .password(passwordEncoder.encode(user.getPassword()))
-                .lastLogin(LocalDateTime.now()) //We will handle the lastLogin when dealing with Status User
                 .build();
         userModel.addRole(role);
         userRepository.save(userModel);

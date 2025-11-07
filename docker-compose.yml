@@ -26,5 +26,5 @@ services:
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0  # No delay for consumer rebalancing.
       CLUSTER_ID: "Mk3OEYBSD34fcwNTJENDM2Qk"  # A unique ID for the Kafka cluster.
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock #Docker socket is mounted — may not be necessary unless you’re planning to interact with Docker inside the container.
+ #     - /var/run/docker.sock:/var/run/docker.sock #Docker socket is mounted — may not be necessary unless you’re planning to interact with Docker inside the container.
       - ./data:/var/lib/kafka/data  # Store Kafka logs on your local machine.

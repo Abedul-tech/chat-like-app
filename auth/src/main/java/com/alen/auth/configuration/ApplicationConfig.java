@@ -1,7 +1,6 @@
 package com.alen.auth.configuration;
 
-import com.alen.auth.model.CustomUserDetails;
-import com.alen.auth.model.CustomUserDetailsService;
+import com.alen.auth.security.CustomUserDetailsService;
 import com.alen.auth.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -9,7 +8,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @RequiredArgsConstructor

@@ -26,6 +26,6 @@ public class ChatController {
     @MessageMapping("/chat.sendPrivateMessage")
     //Inside the service it will require the SimpMessagingTemplate.convertAndSendToUser()
     public void sendPrivateMessage(@Payload MessageDto messageDto) {
-        chatService.sendMessage(messageDto);
+        chatService.storeMessageInCassandra(messageDto);
     }
 }

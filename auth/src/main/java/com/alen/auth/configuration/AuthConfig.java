@@ -16,7 +16,7 @@ public class AuthConfig {
         return http
                 .csrf(csrf->csrf.disable())
                 .authorizeHttpRequests(authRequest->authRequest
-                        .requestMatchers("/api/auth/**","/api/user/*")
+                        .requestMatchers("/api/auth/**","/api/user/**","/api/friendship/**")
                         .permitAll()
                         .anyRequest()
                         .authenticated())

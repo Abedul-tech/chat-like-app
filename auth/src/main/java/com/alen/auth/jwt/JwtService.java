@@ -1,6 +1,6 @@
 package com.alen.auth.jwt;
 
-import com.alen.auth.model.CustomUserDetails;
+import com.alen.auth.security.CustomUserDetails;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;

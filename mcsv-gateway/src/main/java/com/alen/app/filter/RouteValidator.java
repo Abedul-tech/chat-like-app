@@ -11,8 +11,18 @@ public class RouteValidator {
     //Defining endpoints don't require authentication
     public static final List<String> openApiEndpoints = List.of(
             "/api/auth/login",
+            "/api/chat/history",
+            "/api/chat/set-msgs-as-sent",
             "/api/auth/register",
-            "/api/user/by-username",
+            "/api/user/get-id-by-username",
+            "/api/user/get-current-session",
+            "/api/user/get-user-by-username",
+            "/api/user/get-users-by-username",
+            "/api/sessions/user",
+            "/api/friendship/friends",
+            "/api/friendship/get-pending-requests",
+            "/api/friendship/send-request",
+            "/api/friendship/accept-request",
             "/ws"
     );
     //If the URL is NOT in the public list, then the request is secured (authentication is required).

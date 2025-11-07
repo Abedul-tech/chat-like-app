@@ -5,6 +5,8 @@ import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
@@ -51,5 +53,16 @@ public class JwtUtil {
         return roles.stream()
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
+    }
+    public Authentication getAuthenticationFromToken(String token){
+        String username = getSubject(token);
+        String userId = getUserId(token);
+        UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
+                username,
+                null,
+                getRoles(token)
+        );
+        auth.setDetails(userId); // Set extra metadata like userId, we can also do it using a hashmap
+        return auth; // Return the fully constructed Authentication object
     }
 }

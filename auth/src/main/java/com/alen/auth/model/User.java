@@ -1,5 +1,6 @@
 package com.alen.auth.model;
 
+import com.alen.auth.security.CustomUserDetails;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -79,11 +80,6 @@ public class User implements CustomUserDetails {
             name="created_at",
             updatable = false)
     private LocalDateTime created_at;
-
-    @Column(
-            name="last_login",
-            nullable = false)
-    private LocalDateTime lastLogin;//user.setLastLogin(LocalDateTime.now());
 
     //-----------
     public void addRole(Role role) {

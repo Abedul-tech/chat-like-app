@@ -1,5 +1,5 @@
 server:
-  port: 8050
+  port: 8010
 spring:
   application:
     name: mcsv-message
@@ -15,8 +15,6 @@ spring:
 
   kafka:
     bootstrap-servers: localhost:9092
-    template:
-      default-topic: chat # Still present, benign if not producing
     consumer:
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
@@ -30,9 +28,14 @@ spring:
                 class: org.springframework.kafka.support.serializer.JsonDeserializer
           json:
             type: #kafka messages have a header "event", when the consumer reads this, it should deserialize it
-              mapping: event:com.alen.dto.MessageDto
+              mapping: msgEvent:com.alen.dto.MessageDto
             trusted: #checks if the class comes from a trusted package
-              packages: "java.util,java.lang,com.alen.dto,com.alen.dto.*"
+              packages: "com.alen.dto.*"
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        spring.json.type.mapping: msgBackEvent:com.alen.dto.MessageBackDto
 
 management:
   endpoints:

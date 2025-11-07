@@ -12,17 +12,25 @@ spring:
   #Spring level to define beans will be used throughout the service
   kafka:
     bootstrap-servers: localhost:9092 #Kafka broker port
-    template:
-      default-topic: chat #Default topic for KafkaTemplate if you don't define anything
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer #Define how to serialize the key
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer #And the object
-      properties:
-        spring:
-          json:
-            type: #when sending this object, kafka serializer adds a special header _event_
-              mapping: event:com.alen.dto.MessageDto
-
+      properties: # When a Kafka message includes a header with _type=logEvent, the serializer knows to deserialize it into a LogEventDto object.
+        spring.json.type.mapping: | 
+          msgEvent:com.alen.dto.MessageDto, 
+          sessionEvent:com.alen.dto.UserSessionDto,
+          heartbeatEvent:com.alen.dto.HeartbeatDto
+    consumer:
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
+      properties.spring:
+        deserializer:
+          value.delegate.class: org.springframework.kafka.support.serializer.JsonDeserializer
+        json:
+          type.mapping: | 
+            msgBackEvent:com.alen.dto.MessageBackDto,
+            onlineEvent:com.alen.dto.OnlineUsersEvent
+          trusted.packages: "com.alen.dto"
   redis:
     host: localhost
     port: 6379
