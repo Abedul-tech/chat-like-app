@@ -9,6 +9,7 @@ This Spring Boot project utilizes the following technologies:
 - Maven
 - **REST APIs**
 - **WebSocket** (for real-time communication)
+- **Gateway** (API routing and load balancing)
 
 ### Databases & Caching
 - MySQL
@@ -25,3 +26,4 @@ This Spring Boot project utilizes the following technologies:
 ### DevOps & Monitoring
 - Docker
 - Actuator
+
