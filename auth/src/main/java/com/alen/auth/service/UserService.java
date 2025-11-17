@@ -1,9 +1,6 @@
 package com.alen.auth.service;
 
-import com.alen.auth.dto.CurrentUserDto;
-import com.alen.auth.dto.FriendDto;
-import com.alen.auth.dto.UserDto;
-import com.alen.auth.dto.UserIdDto;
+import com.alen.auth.dto.*;
 import com.alen.auth.model.User;
 import com.alen.auth.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +14,7 @@ import java.util.List;
 public class UserService {
     private final UserRepository userRepository;
     private final FriendshipService friendshipService;
+    private final UserProfileService userProfileService;
     public UserIdDto getIdByUsername(String username){
         User user = userRepository.findByUsername(username).orElseThrow(()-> new UsernameNotFoundException("User not found"));
         return UserIdDto.builder()
@@ -32,9 +30,12 @@ public class UserService {
     public CurrentUserDto getCurrentUserByUsername(String username){
         UserDto user = getUserByUsername(username);
         List<FriendDto> friends = friendshipService.getFriendsOfUser(user.getId());
+        UserProfileResponseDto profile = userProfileService.findById(user.getId());
         return CurrentUserDto.builder()
                 .id(user.getId())
                 .username(user.getUsername())
+                .bio(profile.getBio())
+                .photoUrl(profile.getPhotoUrl())
                 .friends(friends)
                 .build();
     }

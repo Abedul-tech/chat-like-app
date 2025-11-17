@@ -4,11 +4,9 @@ import com.alen.auth.dto.FriendDto;
 import com.alen.auth.dto.FriendRequestDto;
 import com.alen.auth.dto.FriendshipRequestDto;
 import com.alen.auth.dto.FriendshipResponseDto;
-import com.alen.auth.model.Friendship;
-import com.alen.auth.model.FriendshipId;
-import com.alen.auth.model.StatusFriendship;
-import com.alen.auth.model.User;
+import com.alen.auth.model.*;
 import com.alen.auth.repository.FriendshipRepository;
+import com.alen.auth.repository.UserProfileRepository;
 import com.alen.auth.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
@@ -27,6 +25,7 @@ import java.util.UUID;
 public class FriendshipService {
     private final FriendshipRepository friendshipRepository;
     private final UserRepository userRepository;
+    private final UserProfileRepository userProfileRepository;
 
     public FriendshipResponseDto sendFriendRequest(FriendshipRequestDto request){
         if(request.getSenderId().equals(request.getReceiverId())){
@@ -85,10 +84,35 @@ public class FriendshipService {
     public List<FriendDto> getFriendsOfUser(UUID userId) {
         List<FriendDto> friends = new ArrayList<>();
         friendshipRepository.findAcceptedByUser1(userId)
-                .forEach(f -> friends.add(new FriendDto(f.getUser2().getId(), f.getUser2().getUsername())));
+                .forEach(f ->{
+                    UUID friendId = f.getUser2().getId();
+                    String photoUrl = null;
+                    try{
+                        photoUrl = userProfileRepository.findById(friendId)
+                                .map(UserProfile::getPhotoUrl)
+                                .orElse(null);
+                    } catch( Exception ignored){}
+                    friends.add(new FriendDto(
+                            friendId,
+                            f.getUser2().getUsername(),
+                            photoUrl
+                    ));
+                });
         friendshipRepository.findAcceptedByUser2(userId)
-                .forEach(f -> friends.add(new FriendDto(f.getUser1().getId(), f.getUser1().getUsername())));
-        System.out.println("Friends found: " + friends);
+                .forEach(f ->{
+                    UUID friendId = f.getUser1().getId();
+                    String photoUrl = null;
+                    try{
+                        photoUrl = userProfileRepository.findById(friendId)
+                                .map(UserProfile::getPhotoUrl)
+                                .orElse(null);
+                    } catch( Exception ignored){}
+                    friends.add(new FriendDto(
+                            friendId,
+                            f.getUser1().getUsername(),
+                            photoUrl
+                    ));
+                });
         return friends;
     }
     /**

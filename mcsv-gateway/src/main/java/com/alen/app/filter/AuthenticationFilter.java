@@ -40,7 +40,7 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
         //exchange= represents the http request
         //chain= let continue the flow to the next service or filter
         return ((exchange, chain) -> {
-            //Creation of variable to pass data trough my request
+            //Creation of variable to pass data through my request
             ServerHttpRequest request=null;
             //If it requires authentication
             if(validator.isSecured.test(exchange.getRequest())){

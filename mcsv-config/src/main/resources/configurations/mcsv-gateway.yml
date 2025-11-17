@@ -50,12 +50,13 @@ spring:
           uri: lb:ws://mcsv-websocket  # Note 'lb:ws://' prefix
           predicates:
             - Path=/ws/**
+          filters:
+            - AuthenticationFilter
         # SockJS HTTP fallback routes
         - id: websocket-sockjs
           uri: lb://mcsv-websocket  # Note 'lb://' prefix for HTTP
           predicates:
             - Path=/ws/info/**
-
         - id: auth
           #Names defined in those application names
           uri: lb://mcsv-auth

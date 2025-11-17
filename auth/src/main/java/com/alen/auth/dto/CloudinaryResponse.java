@@ -1,16 +1,16 @@
 package com.alen.auth.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.UUID;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class FriendDto {
-    private UUID id;
-    private String username;
-    private String photoUrl;
+@Builder
+public class CloudinaryResponse {
+    private String publicId;
+    private String url;
+
 }
