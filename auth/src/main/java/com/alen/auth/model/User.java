@@ -81,6 +81,8 @@ public class User implements CustomUserDetails {
             updatable = false)
     private LocalDateTime created_at;
 
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private UserProfile profile;
     //-----------
     public void addRole(Role role) {
         this.roles = new ArrayList<>();

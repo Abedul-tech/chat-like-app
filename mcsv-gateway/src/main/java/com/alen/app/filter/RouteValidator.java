@@ -11,7 +11,18 @@ public class RouteValidator {
     //Defining endpoints don't require authentication
     public static final List<String> openApiEndpoints = List.of(
             "/api/auth/login",
-            "/api/chat/history",
+            "/ws"
+    );
+    //If the URL is NOT in the public list, then the request is secured (authentication is required).
+    public Predicate<ServerHttpRequest> isSecured =
+            request -> openApiEndpoints
+                    .stream()
+                    .noneMatch(uri-> request.getURI().getPath().contains(uri));
+}
+
+/*
+*
+*             "/api/chat/history",
             "/api/chat/set-msgs-as-sent",
             "/api/auth/register",
             "/api/user/get-id-by-username",
@@ -23,11 +34,5 @@ public class RouteValidator {
             "/api/friendship/get-pending-requests",
             "/api/friendship/send-request",
             "/api/friendship/accept-request",
-            "/ws"
-    );
-    //If the URL is NOT in the public list, then the request is secured (authentication is required).
-    public Predicate<ServerHttpRequest> isSecured =
-            request -> openApiEndpoints
-                    .stream()
-                    .noneMatch(uri-> request.getURI().getPath().contains(uri));
-}
+            *
+            * */
